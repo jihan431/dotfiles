@@ -66,7 +66,7 @@
   },
   "custom/launcher": {
     "format": "",
-    "on-click": "rofi -show drun",
+    "on-click": "rofi -show drun -theme ~/.config/rofi/tema-ungu-saya.rasi",
     "tooltip": false
   },
   "custom/power": {
