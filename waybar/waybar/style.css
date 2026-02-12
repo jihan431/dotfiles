@@ -1,0 +1,342 @@
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  WAYBAR PREMIUM THEME - Purple Dock Edition                  ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+    font-weight: 600;
+    font-size: 20px;
+    min-height: 0;
+    min-width: 0;
+    transition: all 0.3s ease-in;
+}
+
+window#waybar {
+    background: #1f1e2e;
+    color: #c8c8ff;
+    border-right: 1px solid rgba(140, 120, 255, 0.08);
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+}
+
+.modules-left {
+    margin-top: 8px;
+}
+
+.modules-right {
+    margin-bottom: 8px;
+}
+#backlight{
+    padding-right: 6px;
+}
+#connectivity {
+    background-color: #a78bfa;
+    margin: 0px 20px;
+    border-radius: 50px;
+    transition: all 0.8s ease;
+    padding-right: 0px;
+    margin-top: 15px;
+
+}
+
+#custom-connectivity-toggle {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 2px 0;
+    background: transparent;
+    color: rgba(25, 30, 45, 0.95);;
+    font-size: 20px;
+    padding-right: 4px;
+}
+
+#custom-connectivity-toggle:hover {
+    background: transparent;
+}
+
+#tray {
+    padding: 15px;
+    font-size: 15px;
+}
+/* === SEMUA MODUL - ICON ONLY VERTICAL === */
+#custom-launcher,
+#cpu,
+#memory,
+#disk,
+#clock {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 2px 0;
+    border-radius: 0;
+    background: transparent;
+    color: #8b8cc8;
+    font-size: 17px;
+}
+
+#network{
+    padding-right: 6px;
+}
+
+#backlight,
+#network,
+#bluetooth,
+#microphone,
+#pulseaudio{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 2px 0;
+    border-radius: 0;
+    background: transparent;
+    color:#000000;
+    font-size: 17px;
+}
+
+#custom-battery-fill {
+    min-height: 80px;
+    min-width: 12px;
+    border-radius: 20px; /* Slightly rounded corners */
+    margin: 10px 30px;   /* Center it horizontally */
+    padding-right: 1px;
+    color:#1e1e2e; /* Hide text */
+    background: #c8c8ff;
+    box-shadow: inset 0 0 2px rgba(0,0,0,0.2); /* Inner shadow for depth */
+}
+
+/* --- Charging animation --- */
+@keyframes charging-pulse {
+    0%   { opacity: 0.6; }
+    50%  { opacity: 1.0; }
+    100% { opacity: 0.6; }
+}
+
+/* --- Discharging fill levels (purple: bottom-to-top) --- */
+#custom-battery-fill.level-0           { background: #c8c8ff; }
+#custom-battery-fill.level-5           { background: linear-gradient(to top, #de1818 5%,   #c8c8ff 5%);   }
+#custom-battery-fill.level-10          { background: linear-gradient(to top, #de1818 10%,  #c8c8ff 10%);  }
+#custom-battery-fill.level-15          { background: linear-gradient(to top, #de1818 15%,  #c8c8ff 15%);  }
+#custom-battery-fill.level-20          { background: linear-gradient(to top, #de1818 20%,  #c8c8ff 20%);  }
+#custom-battery-fill.level-25          { background: linear-gradient(to top, #ffae00 25%,  #c8c8ff 25%);  }
+#custom-battery-fill.level-30          { background: linear-gradient(to top, #ffae00 30%,  #c8c8ff 30%);  }
+#custom-battery-fill.level-35          { background: linear-gradient(to top, #ffae00 35%,  #c8c8ff 35%);  }
+#custom-battery-fill.level-40          { background: linear-gradient(to top, #ffae00 40%,  #c8c8ff 40%);  }
+#custom-battery-fill.level-45          { background: linear-gradient(to top, #a78bfa 45%,  #c8c8ff 45%);  }
+#custom-battery-fill.level-50          { background: linear-gradient(to top, #a78bfa 50%,  #c8c8ff 50%);  }
+#custom-battery-fill.level-55          { background: linear-gradient(to top, #a78bfa 55%,  #c8c8ff 55%);  }
+#custom-battery-fill.level-60          { background: linear-gradient(to top, #a78bfa 60%,  #c8c8ff 60%);  }
+#custom-battery-fill.level-65          { background: linear-gradient(to top, #a78bfa 65%,  #c8c8ff 65%);  }
+#custom-battery-fill.level-70          { background: linear-gradient(to top, #a78bfa 70%,  #c8c8ff 70%);  }
+#custom-battery-fill.level-75          { background: linear-gradient(to top, #a78bfa 75%,  #c8c8ff 75%);  }
+#custom-battery-fill.level-80          { background: linear-gradient(to top, #a78bfa 80%,  #c8c8ff 80%);  }
+#custom-battery-fill.level-85          { background: linear-gradient(to top, #a78bfa 85%,  #c8c8ff 85%);  }
+#custom-battery-fill.level-90          { background: linear-gradient(to top, #a78bfa 90%,  #c8c8ff 90%);  }
+#custom-battery-fill.level-95          { background: linear-gradient(to top, #a78bfa 95%,  #c8c8ff 95%);  }
+
+#custom-battery-fill.level-100         { background: #a78bfa; }
+
+/* --- Discharging Icon Visibility (White) --- */
+#custom-battery-fill.level-0,
+#custom-battery-fill.level-5,
+#custom-battery-fill.level-10,
+#custom-battery-fill.level-15,
+#custom-battery-fill.level-20,
+#custom-battery-fill.level-25,
+#custom-battery-fill.level-30,
+#custom-battery-fill.level-35,
+#custom-battery-fill.level-40,
+#custom-battery-fill.level-45,
+#custom-battery-fill.level-50,
+#custom-battery-fill.level-55,
+#custom-battery-fill.level-60,
+#custom-battery-fill.level-65,
+#custom-battery-fill.level-70,
+#custom-battery-fill.level-75,
+#custom-battery-fill.level-80,
+#custom-battery-fill.level-85,
+#custom-battery-fill.level-90,
+#custom-battery-fill.level-95,
+#custom-battery-fill.level-100 {
+    font-size: 25px;
+    padding-left: 2px;
+    color: #000000;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    padding-bottom: 2px;
+}
+
+/* --- Charging fill levels (green: bottom-to-top + pulse animation) --- */
+#custom-battery-fill.level-0-charging,
+#custom-battery-fill.level-5-charging,
+#custom-battery-fill.level-10-charging,
+#custom-battery-fill.level-15-charging,
+#custom-battery-fill.level-20-charging,
+#custom-battery-fill.level-25-charging,
+#custom-battery-fill.level-30-charging,
+#custom-battery-fill.level-35-charging,
+#custom-battery-fill.level-40-charging,
+#custom-battery-fill.level-45-charging,
+#custom-battery-fill.level-50-charging,
+#custom-battery-fill.level-55-charging,
+#custom-battery-fill.level-60-charging,
+#custom-battery-fill.level-65-charging,
+#custom-battery-fill.level-70-charging,
+#custom-battery-fill.level-75-charging,
+#custom-battery-fill.level-80-charging,
+#custom-battery-fill.level-85-charging,
+#custom-battery-fill.level-90-charging,
+#custom-battery-fill.level-95-charging,
+#custom-battery-fill.level-100-charging {
+    font-size: 25px;
+    padding-left: 2px;
+    color: #000000;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    padding-bottom: 2px; /* Slight adjustment for vertical centering */
+}
+
+#custom-battery-fill.level-0-charging  { background: #c8c8ff; animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-5-charging  { background: linear-gradient(to top, #33e024 5%,   #c8c8ff 5%);   animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-10-charging { background: linear-gradient(to top, #33e024 10%,  #c8c8ff 10%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-15-charging { background: linear-gradient(to top, #33e024 15%,  #c8c8ff 15%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-20-charging { background: linear-gradient(to top, #33e024 20%,  #c8c8ff 20%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-25-charging { background: linear-gradient(to top, #33e024 25%,  #c8c8ff 25%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-30-charging { background: linear-gradient(to top, #33e024 30%,  #c8c8ff 30%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-35-charging { background: linear-gradient(to top, #33e024 35%,  #c8c8ff 35%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-40-charging { background: linear-gradient(to top, #33e024 40%,  #c8c8ff 40%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-45-charging { background: linear-gradient(to top, #33e024 45%,  #c8c8ff 45%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-50-charging { background: linear-gradient(to top, #33e024 50%,  #c8c8ff 50%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-55-charging { background: linear-gradient(to top, #33e024 55%,  #c8c8ff 55%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-60-charging { background: linear-gradient(to top, #33e024 60%,  #c8c8ff 60%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-65-charging { background: linear-gradient(to top, #33e024 65%,  #c8c8ff 65%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-70-charging { background: linear-gradient(to top, #33e024 70%,  #c8c8ff 70%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-75-charging { background: linear-gradient(to top, #33e024 75%,  #c8c8ff 75%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-80-charging { background: linear-gradient(to top, #33e024 80%,  #c8c8ff 80%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-85-charging { background: linear-gradient(to top, #33e024 85%,  #c8c8ff 85%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-90-charging { background: linear-gradient(to top, #33e024 90%,  #c8c8ff 90%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-95-charging { background: linear-gradient(to top, #33e024 95%,  #c8c8ff 95%);  animation: charging-pulse 2s ease-in-out infinite; }
+#custom-battery-fill.level-100-charging { background: #33e024; animation: charging-pulse 2s ease-in-out infinite; }
+
+#clock {
+    padding-top: 6px;
+    margin: 2px 0;
+    border-radius: 0;
+    background: transparent;
+    color: #c8c8ff;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+#custom-launcher:hover,
+#cpu:hover,
+#memory:hover,
+#disk:hover,
+#tray:hover,
+#clock:hover,
+#custom-power:hover {
+    color: #d4d4ff;
+    border-radius: 0;
+}
+
+
+/* === WORKSPACES === */
+#workspaces {
+    padding-left: 3px;
+}
+
+#workspaces button {
+    padding: 8px 0;
+    margin: 5px 0;
+    color: #4e4e7a;
+    border-radius: 0;
+    background: transparent;
+    font-size: 20px;
+    font-weight: 700;
+    border-right: 8px solid transparent;
+    transition: none;
+}
+
+
+#workspaces button:hover {
+    background: transparent;
+    box-shadow: none;
+    text-shadow: none;
+    color: #c8c8ff;
+    border-color: transparent;
+}
+#workspaces button.active {
+    font-weight: 700;
+    border-radius: 0;
+    color:  #a78bfa;
+}
+
+#workspaces button.urgent {
+    color: #1e1e2e;
+    background: #f38ba8;
+}
+
+/* === LAUNCHER === */
+#custom-launcher {
+    font-size: 30px;
+    color: #a78bfa;
+    padding-right: 10px;
+}
+
+/* === CLOCK === */
+#clock {
+    color:#a78bfa;
+    font-weight: 700;
+}
+
+/* === NETWORK STATE === */
+#network.disconnected {
+    color: #4e4e7a;
+}
+
+/* === BLUETOOTH STATE === */
+#bluetooth.connected {
+    color: #c8c8ff;
+}
+
+/* === AUDIO STATE === */
+#pulseaudio.muted {
+    color: #4e4e7a;
+}
+#pulseaudio {
+    padding-right: 0px;
+    font-size: 18px;
+}
+#pulseaudio.microphone {
+    font-size: 20px;
+}
+
+/* === POWER BUTTON === */
+#custom-power {
+    color: #a78bfa;
+    margin: 10px;
+    font-size: 25px;
+}
+
+#custom-power:hover {
+    border-radius: 50px;
+    margin: 10px 18px;
+    color: #d53f49;
+}
+
+/* === TOOLTIP === */
+tooltip {
+    background: linear-gradient(135deg, rgba(35, 42, 59, 0.95), rgba(25, 30, 45, 0.95));
+    border: 1px solid rgba(140, 120, 255, 0.15);
+    border-radius: 12px;
+}
+
+tooltip label {
+    color: #c8c8ff;
+    padding: 8px 12px;
+}

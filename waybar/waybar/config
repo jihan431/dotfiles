@@ -1,0 +1,170 @@
+{
+  "layer": "top",
+  "position": "left",
+  "mod": "dock",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "width": 80,
+  "fixed-center": true,
+  "spacing": 0,
+  "modules-left": [
+    "custom/launcher",
+    "clock",
+    "hyprland/workspaces",
+    "group/connectivity"
+  ],
+  "modules-center": [],
+  "modules-right": [
+    "tray",
+    "custom/battery-fill",
+    "custom/power"
+  ],
+  "group/connectivity": {
+    "orientation": "vertical",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "connectivity-child",
+      "transition-left-to-right": true,
+      "click-to-reveal": true
+    },
+    "modules": [
+      "custom/connectivity-toggle",
+      "backlight",
+      "network",
+      "bluetooth",
+      "pulseaudio",
+      "pulseaudio#microphone"
+    ]
+  },
+  "custom/connectivity-toggle": {
+    "format": "󰍲",
+    "tooltip": false
+  },
+  "clock": {
+    "format": "{:%H\n%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "on-click": "activate",
+    "format": "{icon}",
+    "format-icons": {
+      "1": "",
+      "2": "󰨞",
+      "3": "",
+      "4": "",
+      "default": ""
+    },
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": []
+    }
+  },
+  "custom/launcher": {
+    "format": "",
+    "on-click": "rofi -show drun",
+    "tooltip": false
+  },
+  "custom/power": {
+    "format": "󰍃",
+    "on-click": "wlogout",
+    "tooltip": false
+  },
+  "cpu": {
+    "interval": 10,
+    "format": "󰻠",
+    "tooltip": true,
+    "tooltip-format": "CPU: {usage}%"
+  },
+  "memory": {
+    "interval": 30,
+    "format": "󰍛",
+    "tooltip": true,
+    "tooltip-format": "RAM: {percentage}%"
+  },
+  "disk": {
+    "interval": 30,
+    "format": "󰋊",
+    "tooltip": true,
+    "tooltip-format": "Disk: {percentage_used}%",
+    "path": "/"
+  },
+  "tray": {
+    "icon-size": 20,
+    "spacing": 8
+  },
+  "backlight": {
+    "device": "intel_backlight",
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": [
+      "󰃞",
+      "󰃟",
+      "󰃠"
+    ],
+    "on-scroll-up": "/home/lyon/.config/waybar/scripts/brightness-control.sh d",
+    "on-scroll-down": "/home/lyon/.config/waybar/scripts/brightness-control.sh i"
+  },
+  "custom/battery-fill": {
+    "exec": "/home/lyon/.config/waybar/scripts/battery-fill.sh",
+    "return-type": "json",
+    "interval": 5,
+    "tooltip": true
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "tooltip": true,
+    "tooltip-format": "{volume}%",
+    "format-muted": "󰖁",
+    "on-click": "/home/lyon/.config/waybar/scripts/volume-control.sh m",
+    "on-scroll-up": "/home/lyon/.config/waybar/scripts/volume-control.sh i",
+    "on-scroll-down": "/home/lyon/.config/waybar/scripts/volume-control.sh d",
+    "scroll-step": 5,
+    "reverse-scrolling": 1,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "󰕿",
+        "󰖀",
+        "󰕾"
+      ]
+    }
+  },
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "tooltip": false,
+    "format-source": "󰍬",
+    "format-source-muted": "󰍭",
+    "on-click": "pamixer --default-source -t",
+    "on-scroll-up": "pamixer --default-source -i 5",
+    "on-scroll-down": "pamixer --default-source -d 5",
+    "scroll-step": 5
+  },
+  "network": {
+    "format-wifi": "󰤨",
+    "format-ethernet": "",
+    "tooltip-format": "{essid} - {ifname} via {gwaddr}",
+    "format-linked": "",
+    "format-disconnected": "",
+    "format-alt": "󰤨",
+    "on-click": "/home/lyon/.config/waybar/scripts/launch-network.sh"
+  },
+  "bluetooth": {
+    "format": "󰂯",
+    "format-disabled": "",
+    "format-connected": "",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "on-click": "blueman-manager"
+  }
+}
