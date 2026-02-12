@@ -1,4 +1,4 @@
-cat > ~/dotfiles/README.md << 'EOF'
+
 # 🍙 My Dotfiles
 
 ![My Setup](waybar/image.png)
