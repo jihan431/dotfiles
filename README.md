@@ -64,7 +64,8 @@ https://www.nerdfonts.com/
 
 ⌨️ Keybinds
 Key	Action
-Super + Q	Close App
-Super + Enter Open Terminal
-Super + E	File Manager
-Super + Space	App Launcher
+
+- Super + Q	Close App
+- Super + Enter Open Terminal
+- Super + E	File Manager
+- Super + Space	App Launcher
