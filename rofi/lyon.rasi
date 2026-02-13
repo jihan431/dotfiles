@@ -1,0 +1,116 @@
+* {
+    background-utama:    #1e1e2eff;
+    background-aksen:    #9689d219;
+    teks-utama:          #d9e0ee;
+    teks-dipilih:        #ffffffff;
+    border-warna:        #9689D2;
+
+    font: "SF Compact Display Medium 12";
+    
+    background-color:   transparent;
+    text-color:         @teks-utama;
+    margin:             0px;
+    padding:            0px;
+    spacing:            0px;
+}
+
+configuration {
+    modi:                       "drun,run,filebrowser,window";
+    show-icons:                 true;
+    display-drun:               "";
+    display-run:                "";
+    display-filebrowser:        "";
+    display-window:             "";
+    drun-display-format:        "{name}";
+    window-format:              "{w} · {c} · {t}";
+    
+    hover-select:               true;
+    me-select-entry:            "";
+    me-accept-entry:            "MousePrimary";
+}
+
+window {
+    location:       center;
+    width:          500px;
+    border-radius:  16px;    
+    background-color:   @background-utama;
+    border:             0px;
+    border-color:       @border-warna;
+    children:           [ mainbox ];
+}
+
+mainbox {
+    background-color:   transparent;
+    border:             0px;
+    border-radius:      0px;
+    border-color:       @border-warna;
+    children:           [ inputbar, listview ];
+    spacing:            10px;
+    padding:            10px;
+}
+
+inputbar {
+    children:           [ icon-search, entry ];
+    background-color:   @background-utama;
+    text-color:         @teks-utama;
+    expand:             false;
+    border-radius:      8px;
+    padding:            12px;
+    border:             1px;
+    border-color:       @border-warna;
+}
+
+icon-search {
+    expand:     false;
+    filename:   "search";
+    size:       24px;
+    vertical-align: 0.5;
+}
+
+entry {
+    background-color:   transparent;
+    text-color:         @teks-utama;
+    placeholder:        "Cari aplikasi...";
+    placeholder-color:  inherit;
+    vertical-align:     0.5;
+    margin:             0px 0px 0px 10px;
+}
+
+listview {
+    background-color:   transparent;
+    columns:            4;
+    lines:              4;
+    spacing:            0px;
+    cycle:              false;
+    dynamic:            false;
+    layout:             vertical;
+    flow:               horizontal;
+    scrollbar:          true;
+}
+
+element {
+    orientation: vertical;
+    padding:     15px 10px;
+    spacing:     5px;
+    border-radius: 12px;
+    background-color: transparent;
+    text-color: @teks-utama;
+}
+
+element-text, element-icon {
+    background-color: transparent;
+    text-color:       inherit;
+    vertical-align:   0.5;
+    horizontal-align: 0.5;
+}
+
+element-icon {
+    size:   48px;
+    margin: 0px 0px 5px 0px;
+}
+
+element selected {
+    background-color:   @background-aksen;
+    text-color:         @teks-dipilih;
+    border:             0px;
+}

@@ -54,6 +54,23 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     exit 1
 fi
 
+# --- 1.5 INSTALASI DEPENDENSI TEMA ---
+echo ""
+log "Memeriksa dan menginstal tema GTK, Ikon, dan Kursor..."
+# Daftar paket yang kamu butuhkan
+PACKAGES="catppuccin-gtk-theme-mocha tela-icon-theme deepin-cursor-theme-git"
+
+if command -v yay &> /dev/null; then
+    yay -S --needed $PACKAGES
+    success "Tema berhasil diinstal via yay."
+elif command -v paru &> /dev/null; then
+    paru -S --needed $PACKAGES
+    success "Tema berhasil diinstal via paru."
+else
+    warn "yay atau paru tidak ditemukan. Lewati instalasi tema otomatis."
+fi
+echo ""
+
 # --- 2. FUNGSI LINKING ---
 link_config() {
     local folder_name=$1
@@ -96,7 +113,69 @@ link_config "hypr"
 link_config "waybar"
 link_config "rofi"
 link_config "networkmanager-dmenu"
+link_config "gtk-3.0"
+link_config "gtk-4.0"
+link_config "kitty"  # Hilangkan tanda '#' kalau kamu pakai kitty
+link_config "swww"   # Hilangkan tanda '#' kalau kamu pakai swww
+
+# --- 4. LINK FILE (Untuk .bashrc dll) ---
+link_file() {
+    local file_name=$1
+    local source_path="$DOTFILES_DIR/$file_name"
+    local target_path="$HOME/$file_name"
+
+    log "Memproses: $file_name"
+
+    # Cek source
+    if [ ! -f "$source_path" ]; then
+        error "Sumber file tidak ditemukan: $source_path"
+        return
+    fi
+
+    # Cek target, backup jika ada
+    if [ -f "$target_path" ] || [ -L "$target_path" ]; then
+        current_link=$(readlink -f "$target_path")
+        if [ "$current_link" == "$source_path" ]; then
+            success "$file_name sudah terhubung dengan benar."
+            return
+        fi
+
+        warn "File lama ditemukan. Membuat backup..."
+        mv "$target_path" "${target_path}.bak_$(date +%Y%m%d_%H%M%S)"
+        success "Backup dibuat di ${target_path}.bak_..."
+    fi
+
+    # Buat symlink
+    ln -s "$source_path" "$target_path"
+    success "Symlink dibuat: $target_path -> $source_path"
+}
+
+# Link .bashrc
+link_file ".bashrc"
+
+# --- 5. LINK FONTS CUSTOM ---
+echo ""
+if [ -d "$DOTFILES_DIR/fonts" ]; then
+    log "Memproses: fonts"
+    mkdir -p "$HOME/.local/share"
+    
+    if [ -d "$HOME/.local/share/fonts" ] && [ ! -L "$HOME/.local/share/fonts" ]; then
+        warn "Folder font asli ditemukan. Membuat backup..."
+        mv "$HOME/.local/share/fonts" "$HOME/.local/share/fonts.bak_$(date +%Y%m%d_%H%M%S)"
+    fi
+    
+    if [ ! -L "$HOME/.local/share/fonts" ]; then
+        ln -s "$DOTFILES_DIR/fonts" "$HOME/.local/share/fonts"
+        success "Font berhasil ditautkan!"
+    fi
+    
+    # Refresh cache font sistem
+    fc-cache -fv &> /dev/null
+    success "Cache font diperbarui."
+else
+    warn "Folder fonts tidak ditemukan di dotfiles. Lewati setup font."
+fi
 
 echo ""
 echo -e "${GREEN}=== Instalasi Selesai! ===${NC}"
-echo "Silakan restart Hyprland atau Waybar untuk melihat perubahan."
+echo "Silakan restart terminal atau source ~/.bashrc untuk melihat perubahan."

@@ -66,7 +66,7 @@
   },
   "custom/launcher": {
     "format": "",
-    "on-click": "rofi -show drun -theme ~/.config/rofi/tema-ungu-saya.rasi",
+    "on-click": "rofi -show drun -theme ~/.config/rofi/lyon.rasi",
     "tooltip": false
   },
   "custom/power": {
@@ -95,7 +95,10 @@
   },
   "tray": {
     "icon-size": 20,
-    "spacing": 8
+    "spacing": 8,
+    "ignore-list": [
+      "blueman-applet"
+    ]
   },
   "backlight": {
     "device": "intel_backlight",
@@ -165,6 +168,6 @@
     "tooltip-format": "{controller_alias}\t{controller_address}",
     "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-    "on-click": "blueman-manager"
+    "on-click": "/home/lyon/.config/waybar/scripts/rofi-bluetooth.sh"
   }
 }

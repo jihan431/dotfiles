@@ -104,7 +104,7 @@ window#waybar {
 #custom-battery-fill {
     min-height: 80px;
     min-width: 12px;
-    border-radius: 20px; /* Slightly rounded corners */
+    border-radius: 5px; /* Slightly rounded corners */
     margin: 10px 30px;   /* Center it horizontally */
     padding-right: 1px;
     color:#1e1e2e; /* Hide text */

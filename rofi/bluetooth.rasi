@@ -1,0 +1,106 @@
+@import "lyon.rasi"
+
+/* Overwrite font to match system preference if needed, otherwise inherit */
+* {
+    font: "JetBrainsMono Nerd Font Bold 12";
+}
+
+window {
+    width:          450px;          /* Fixed width for consistency */
+    location:       center;         /* Center for better visibility */
+    anchor:         center;
+    x-offset:       0px;
+    y-offset:       0px;
+    
+    background-color:   @background-utama;
+    border:             0px;
+    border-color:       @border-warna;
+    border-radius:      16px;       /* Softer corners */
+    padding:            20px;
+}
+
+/* Header Area (Input + Prompt) */
+inputbar {
+    background-color:   transparent;
+    text-color:         @teks-utama;
+    border-radius:      10px;
+    margin:             0px 0px 15px 0px;
+    padding:            0px;
+    children:           [ prompt, entry ];
+}
+
+prompt {
+    enabled:            true;
+    padding:            12px 15px;
+    background-color:   @background-aksen;
+    text-color:         @teks-dipilih;
+    border-radius:      10px 0px 0px 10px;
+    font:               "JetBrainsMono Nerd Font Bold 12";
+}
+
+entry {
+    background-color:   #252538;    /* Slightly lighter than bg */
+    text-color:         @teks-utama;
+    placeholder:        "Search Devices...";
+    placeholder-color:  #6c6c8c;
+    padding:            12px 15px;
+    border-radius:      0px 10px 10px 0px;
+    vertical-align:     0.5;
+}
+
+/* List of Devices */
+listview {
+    background-color:   transparent;
+    columns:            1;
+    lines:              8;
+    spacing:            6px;
+    cycle:              true;
+    dynamic:            true;
+    layout:             vertical;
+    flow:               vertical;   /* Ensure vertical flow for list */
+    scrollbar:          false;
+    margin:             5px 0px 0px 0px;
+}
+
+/* Each Device Item */
+element {
+    background-color:   transparent;
+    text-color:         @teks-utama;
+    orientation:        horizontal; /* Force horizontal for list items */
+    border-radius:      10px;
+    padding:            10px 15px;
+    spacing:            0px;        /* Reset spacing */
+}
+
+element-icon {
+    background-color:   transparent;
+    text-color:         inherit;
+    size:               24px;       /* Reset icon size */
+    cursor:             inherit;
+    margin:             0px 15px 0px 0px;
+    vertical-align:     0.5;
+    horizontal-align:   0.5;
+}
+
+element-text {
+    background-color:   transparent;
+    text-color:         inherit;
+    vertical-align:     0.5;
+    horizontal-align:   0.0;        /* Left align text */
+    cursor:             inherit;
+}
+
+/* Hover & Selection Effects */
+element selected {
+    background-color:   @background-aksen;
+    text-color:         @teks-dipilih;
+    border:             0px;
+}
+
+element selected element-text {
+    text-color:         @teks-dipilih;
+}
+
+element selected element-icon {
+    text-color:         @teks-dipilih;
+}
