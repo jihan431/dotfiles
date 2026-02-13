@@ -13,7 +13,7 @@ A collection of configuration files (dotfiles) for my Arch Linux setup using **H
 | Desktop | App Launcher |
 |:---:|:---:|
 | <img src="waybar/image3.png" alt="Desktop" width="400"/> | <img src="waybar/image2.png" alt="Launcher" width="400"/> |
-| *Clean State* | *App Launcher* |
+| *launcher and others* | *floating window* |
 
 ---
 
