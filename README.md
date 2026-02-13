@@ -41,7 +41,7 @@ A collection of configuration files (dotfiles) for my **Arch Linux** setup using
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/dotfiles.git
+git clone https://github.com/jihan431/dotfiles.git
 cd dotfiles
 ```
 
