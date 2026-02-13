@@ -1,0 +1,19 @@
+;; 1. DEFINISI VARIABEL (HARUS DI ATAS)
+(defpoll hour :interval "1s" `date +%H`)
+(defpoll min  :interval "1s" `date +%M`)
+
+;; 2. DEFINISI WINDOW
+(defwindow clock
+  :monitor 0
+  :stacking "bg"
+  :wm-ignore true
+  :geometry (geometry :x "50px" 
+                      :y "0%" 
+                      :width "300px" 
+                      :height "450px" 
+                      :anchor "center left") 
+  (box :orientation "v" 
+       :space-evenly false 
+       :class "clock-box"
+    (label :text hour :class "time-hour")
+    (label :text min  :class "time-min")))

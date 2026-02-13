@@ -1,48 +1,59 @@
 #!/bin/bash
 
-# Definisikan lokasi folder
+# Warna untuk output agar estetik
+PURPLE='\033[0;35m'
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
 DOTFILES_DIR="$HOME/dotfiles"
 CONFIG_DIR="$HOME/.config"
-# Buat folder backup dengan penanda waktu biar rapi
-BACKUP_DIR="$HOME/.config/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
 
-# Daftar aplikasi di dalam .config yang mau di-symlink
-CONFIG_APPS=("hypr" "waybar" "rofi" "swww" "gtk-3.0" "gtk-4.0")
+echo -e "${PURPLE}======================================${NC}"
+echo -e "${PURPLE}   SYMLINK SETUP (No Installation)    ${NC}"
+echo -e "${PURPLE}======================================${NC}"
 
-echo "========================================"
-echo "🚀 Memulai Setup Dotfiles Otomatis..."
-echo "========================================"
+# Fungsi untuk membuat symlink secara aman
+link_folder() {
+    local folder=$1
+    local src="$DOTFILES_DIR/$folder"
+    local dest="$CONFIG_DIR/$folder"
 
-# Looping untuk setiap aplikasi
-for app in "${CONFIG_APPS[@]}"; do
-    TARGET="$CONFIG_DIR/$app"
-    SOURCE="$DOTFILES_DIR/$app"
-
-    # Cek apakah folder sumber ada di dotfiles kita
-    if [ -d "$SOURCE" ]; then
-        echo "Memproses: $app..."
-
-        # Skenario 1: Jika target sudah ada dan berupa symlink (meskipun rusak/looping)
-        if [ -L "$TARGET" ]; then
-            echo "  [!] Symlink lama ditemukan. Menghapus symlink..."
-            rm "$TARGET"
+    if [ -d "$src" ]; then
+        echo -e "${BLUE}[Processing]${NC} $folder"
         
-        # Skenario 2: Jika target ada dan berupa folder asli (bukan symlink)
-        elif [ -d "$TARGET" ]; then
-            echo "  [!] Folder asli ditemukan. Mem-backup ke $BACKUP_DIR..."
-            mkdir -p "$BACKUP_DIR"
-            mv "$TARGET" "$BACKUP_DIR/"
+        # Hapus jika folder/link lama sudah ada agar tidak loop
+        if [ -d "$dest" ] || [ -L "$dest" ]; then
+            rm -rf "$dest"
         fi
-
-        # Buat symlink baru yang bersih
-        ln -s "$SOURCE" "$TARGET"
-        echo "  [✔] Symlink berhasil dibuat!"
+        
+        # Buat symlink baru
+        ln -s "$src" "$dest"
+        echo -e "${GREEN}[Success]${NC} $folder linked."
     else
-        echo "  [?] Lewati $app: Folder tidak ditemukan di ~/dotfiles."
+        echo -e "${BLUE}[Skipped]${NC} $folder not found in dotfiles."
     fi
-done
+}
 
-echo "========================================"
-echo "🎉 Setup Selesai! Dotfiles sudah terhubung."
-echo "Backup konfigurasi lama (jika ada) tersimpan di: $BACKUP_DIR"
-echo "========================================"
+# 1. Pastikan direktori .config ada
+mkdir -p "$CONFIG_DIR"
+
+# 2. List folder yang mau di-link (tambah/hapus sesuai kebutuhan)
+link_folder "hypr"
+link_folder "waybar"
+link_folder "rofi"
+link_folder "eww"
+link_folder "networkmanager-dmenu"
+link_folder "gtk-3.0"
+link_folder "gtk-4.0"
+
+# 3. Khusus untuk file di root home (seperti .bashrc)
+if [ -f "$DOTFILES_DIR/.bashrc" ]; then
+    rm -f "$HOME/.bashrc"
+    ln -s "$DOTFILES_DIR/.bashrc" "$HOME/.bashrc"
+    echo -e "${GREEN}[Success]${NC} .bashrc linked."
+fi
+
+echo -e "${PURPLE}======================================${NC}"
+echo -e "${GREEN}  All symlinks are now up to date!   ${NC}"
+echo -e "${PURPLE}======================================${NC}"

@@ -71,7 +71,7 @@
   },
   "custom/power": {
     "format": "󰍃",
-    "on-click": "wlogout",
+    "on-click": "/home/lyon/dotfiles/waybar/scripts/power-menu.sh",
     "tooltip": false
   },
   "cpu": {

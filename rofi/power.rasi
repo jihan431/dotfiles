@@ -1,0 +1,82 @@
+/**
+ *
+ * Rofi Power Menu Theme
+ * Based on lyon.rasi
+ *
+ */
+
+* {
+    /* Theme settings */
+    background-utama:    #1e1e2ee3;
+    background-aksen:    #9689d219;
+    teks-utama:          #d9e0ee;
+    teks-dipilih:        #ffffffff;
+    border-warna:        #9689D2;
+
+    font: "SF Compact Display Medium 48";
+    
+    background-color:   transparent;
+    text-color:         @teks-utama;
+}
+
+configuration {
+    show-icons: false;
+}
+
+window {
+    width:            500px;
+    height:           500px;
+    location:         center;
+    anchor:           center;
+    x-offset:         0;
+    y-offset:         0;
+
+    background-color: @background-utama;
+    border:           2px;
+    border-color:     @border-warna;
+    border-radius:    50px;
+    
+    children:         [ mainbox ];
+}
+
+mainbox {
+    background-color: transparent;
+    children:         [ listview ];
+    padding:          15px;
+}
+
+listview {
+    columns:          2;
+    lines:            2;
+    cycle:            true;
+    dynamic:          true;
+    layout:           vertical;
+    flow:             horizontal;
+    scrollbar:        false;
+    spacing:          30px;
+}
+
+element {
+    background-color: transparent;
+    text-color:       @teks-utama;
+    orientation:      vertical;
+    border-radius:    24px;
+    padding:          55px 0px;
+    cursor:           pointer;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    font:             "SF Compact Display Medium 64";
+    expand:           true;
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+}
+
+element selected {
+    background-color: transparent;
+    text-color:       @border-warna;
+    border:           0px;
+    border-color:     #9689D2;
+}

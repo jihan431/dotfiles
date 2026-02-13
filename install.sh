@@ -109,6 +109,7 @@ link_config() {
 mkdir -p "$CONFIG_DIR"
 
 # List folder yang mau di-link
+link_config "eww"
 link_config "hypr"
 link_config "waybar"
 link_config "rofi"

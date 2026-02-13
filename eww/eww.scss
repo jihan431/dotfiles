@@ -1,0 +1,21 @@
+/* Paksa jendela utama eww transparan */
+window {
+  background-color: transparent;
+}
+
+.clock-box {
+  background-color: rgba(30, 30, 46); /* Lebih pekat agar angka jelas */
+  padding: 30px;
+  border-radius: 0px 200px;
+}
+
+.time-hour, .time-min {
+  font-family: "SF Compact Display"; 
+  font-size: 120pt; /* Ukuran besar */
+  font-weight: bold;
+  color: #9689D2;
+}
+
+.time-hour {
+  margin-bottom: -30px; /* Rapatkan jam dan menit */
+}
