@@ -7,8 +7,6 @@
 THEME="/home/lyon/dotfiles/rofi/bluetooth.rasi"
 
 # Functions
-
-# Power state
 power_on() {
     bluetoothctl power on
 }
@@ -17,139 +15,151 @@ power_off() {
     bluetoothctl power off
 }
 
-# Scan state
-# We can't easily toggle scan in a one-shot menu, but we can just run a scan.
-toggle_scan() {
-    # If we are here, user wants to create a new scan or stop it.
-    # But for a menu, usually we just want to ensure we see devices.
-    # We'll just run a background scan.
-    if pgrep -f "bluetoothctl scan on" > /dev/null; then
-        killall bluetoothctl
-        notify-send "Bluetooth" "Scan stopped."
-    else
-        bluetoothctl scan on &
-        notify-send "Bluetooth" "Scanning started..."
-    fi
-}
-
 # Get status
 get_status() {
     if [ $(bluetoothctl show | grep "Powered: yes" | wc -l) -eq 1 ]; then
-        echo "  Power: ON"
+        echo "ON"
     else
-        echo "  Power: OFF"
+        echo "OFF"
     fi
 }
 
-# Main Logic
-
 STATUS=$(get_status)
-OPTION_POWER_ON="󰐥  Turn On"
-OPTION_POWER_OFF="󰐥  Turn Off"
-OPTION_EXIT="󰅖  Exit"
 
-# Power Check
-if [[ "$STATUS" == *"ON"* ]]; then
-    # Auto-Scan Logic
-    # We want to ensure we have fresh devices.
-    # To see new devices, we should scan for a bit and then show the list.
-    # If we just background scan, `bluetoothctl devices` might not pick them up immediately if they are not cached.
+# Prepare lists
+declare -a ACTIONS
+declare -a MACS
+declare -a NAMES
+INDEX=0
+OPTIONS=""
+
+# 1. Add Control Buttons
+# We use a special prefix in ACTIONS array to identify them
+if [ "$STATUS" == "ON" ]; then
+    # Button 1: Turn Off
+    OPTIONS+="<span color='#e78284'><b>  Turn Off</b></span>\n"
+    ACTIONS[$INDEX]="POWER_OFF"
+    ((INDEX++))
     
-    if ! pgrep -f "bluetoothctl scan on" > /dev/null; then
-        notify-send "Bluetooth" "Scanning for new devices (4s)..."
-        # Start scanning in background
-        bluetoothctl scan on > /dev/null 2>&1 &
-        SCAN_PID=$!
-        # Wait for discovery
-        sleep 4
-        # We don't kill it yet, so devices list is fresh
-    fi
-    
-    POWER_OPTION="$OPTION_POWER_OFF"
+    # Button 2: Rescan
+    OPTIONS+="<span color='#8caaee'><b>󰑐  Rescan</b></span>\n"
+    ACTIONS[$INDEX]="RESCAN"
+    ((INDEX++))
 else
-    POWER_OPTION="$OPTION_POWER_ON"
-fi
-
-# Build Menu
-if [[ "$STATUS" == *"OFF"* ]]; then
-    echo -e "$OPTION_POWER_ON\n$OPTION_EXIT" | rofi -dmenu -i -p "Bluetooth" -theme "$THEME" -mesg "$STATUS" > /tmp/rofi_bt_selection
-else
-    # Printing options
-    echo -e "$OPTION_POWER_OFF"
-    echo -e "󰑐  Rescan"
+    # Button 1: Turn On
+    OPTIONS+="<span color='#a6da95'><b>  Turn On</b></span>\n"
+    ACTIONS[$INDEX]="POWER_ON"
+    ((INDEX++))
     
-    # Separator (No newline at start to avoid empty box)
-    echo -e "--- Devices ---"
+    # Button 2: Exit
+    OPTIONS+="<span color='#e5c890'><b>󰅖  Exit</b></span>\n"
+    ACTIONS[$INDEX]="EXIT"
+    ((INDEX++))
     
-    bluetoothctl devices | while read -r line; do
-        MAC=$(echo "$line" | cut -d ' ' -f 2)
-        NAME=$(echo "$line" | cut -d ' ' -f 3-)
-        
-        # Check if connected
-        if bluetoothctl info "$MAC" | grep -q "Connected: yes"; then
-            ICON="󰂱" 
-        else
-            ICON=""
-        fi
-        
-        echo "$ICON  $NAME  <span weight='light' size='small'>($MAC)</span>"
-    done
-fi | rofi -dmenu -i -p "Bluetooth" -theme "$THEME" -mesg "$STATUS" -markup-rows > /tmp/rofi_bt_selection
-
-# Handle Selection
-SELECTION=$(cat /tmp/rofi_bt_selection)
-rm /tmp/rofi_bt_selection
-
-if [ -z "$SELECTION" ]; then
+    # In OFF state, we just show these buttons
+    echo -e "$OPTIONS" | rofi -dmenu -i -p "Bluetooth" -theme "$THEME" -markup-rows -format i -a 0,1 > /tmp/rofi_bt_selection
+    
+    # Handle Selection (OFF State)
+    SELECTION=$(cat /tmp/rofi_bt_selection)
+    rm /tmp/rofi_bt_selection
+    
+    if [ -z "$SELECTION" ]; then exit 0; fi
+    
+    selected_action="${ACTIONS[$SELECTION]}"
+    case "$selected_action" in
+        "POWER_ON") power_on ;;
+        "EXIT") exit 0 ;;
+    esac
     exit 0
 fi
 
-case "$SELECTION" in
-    "$OPTION_POWER_ON")
-        power_on
-        ;;
-    "$OPTION_POWER_OFF")
+# 2. Add Devices (Only if ON)
+
+# Check if scanning
+if ! pgrep -f "bluetoothctl scan on" > /dev/null; then
+    # Auto scan for 3 sec if not scanning
+    bluetoothctl scan on > /dev/null 2>&1 &
+    sleep 0.5
+fi
+
+# Get formatted device list
+# Format: "Device <MAC> <Name>"
+# parsing `bluetoothctl devices`
+# We iterate line by line
+while read -r line; do
+    MAC=$(echo "$line" | cut -d ' ' -f 2)
+    NAME=$(echo "$line" | cut -d ' ' -f 3-)
+    
+    # Skip if MAC is missing
+    if [ -z "$MAC" ]; then continue; fi
+    
+    # Check info
+    INFO=$(bluetoothctl info "$MAC")
+    CONNECTED=$(echo "$INFO" | grep "Connected: yes")
+    TRUSTED=$(echo "$INFO" | grep "Trusted: yes")
+    ICON=""
+    
+    # Visual markers
+    STATUS_MARK=""
+    if [ -n "$CONNECTED" ]; then
+        STATUS_MARK="<span color='#a6da95'><b>(Connected)</b></span>"
+        ICON="󰂱"
+    elif [ -n "$TRUSTED" ]; then
+         STATUS_MARK="<span size='small' color='#6c6c8c'>(Trusted)</span>"
+    fi
+    
+    # Display Format: Icon   Name   Status
+    DISPLAY="$ICON   <b>$NAME</b>   $STATUS_MARK <span size='small' color='#6c6c8c'>$MAC</span>"
+    
+    OPTIONS+="$DISPLAY\n"
+    ACTIONS[$INDEX]="DEVICE"
+    MACS[$INDEX]="$MAC"
+    NAMES[$INDEX]="$NAME"
+    ((INDEX++))
+    
+done < <(bluetoothctl devices)
+
+# Show Menu
+# -a 0,1 marks the first two items (buttons) as active
+CHOSEN_INDEX=$(echo -e "$OPTIONS" | rofi -dmenu -i -p "Bluetooth" -theme "$THEME" -markup-rows -format i -a 0,1)
+
+if [ -z "$CHOSEN_INDEX" ]; then exit 0; fi
+
+ACTION="${ACTIONS[$CHOSEN_INDEX]}"
+
+case "$ACTION" in
+    "POWER_OFF")
         power_off
         ;;
-    "󰑐  Rescan")
+    "RESCAN")
         killall bluetoothctl
         bluetoothctl scan on > /dev/null 2>&1 &
         notify-send "Bluetooth" "Rescanning..."
         ;;
-    "$OPTION_EXIT")
-        exit 0
-        ;;
-    "--- Devices ---")
-        exit 0
-        ;;
-    *)
-        # It's a device
-        # Extract MAC address from the parenthesis
-        MAC=$(echo "$SELECTION" | sed -n 's/.*(\(.*\)).*/\1/p')
+    "DEVICE")
+        MAC="${MACS[$CHOSEN_INDEX]}"
+        DEV_NAME="${NAMES[$CHOSEN_INDEX]}"
         
-        if [ -n "$MAC" ]; then
-            DEV_NAME=$(echo "$SELECTION" | sed 's/  <.*//' | sed 's/^...  //')
-            
-            ACTION=$(echo -e "Connect\nDisconnect\nPair\nTrust\nRemove" | rofi -dmenu -i -p "$DEV_NAME" -theme "$THEME")
-            
-            case "$ACTION" in
-                "Connect")
-                    notify-send "Bluetooth" "Connecting to $DEV_NAME..."
-                    bluetoothctl connect "$MAC"
-                    ;;
-                "Disconnect")
-                    bluetoothctl disconnect "$MAC"
-                    ;;
-                "Pair")
-                    bluetoothctl pair "$MAC"
-                    ;;
-                "Trust")
-                    bluetoothctl trust "$MAC"
-                    ;;
-                "Remove")
-                    bluetoothctl remove "$MAC"
-                    ;;
-            esac
-        fi
+        # Submenu for device action
+        ACT=$(echo -e "Connect\nDisconnect\nPair\nTrust\nRemove\nCancel" | rofi -dmenu -i -p "$DEV_NAME" -theme "$THEME")
+        
+        case "$ACT" in
+            "Connect")
+                notify-send "Bluetooth" "Connecting to $DEV_NAME..."
+                bluetoothctl connect "$MAC"
+                ;;
+            "Disconnect")
+                bluetoothctl disconnect "$MAC"
+                ;;
+            "Pair")
+                bluetoothctl pair "$MAC"
+                ;;
+            "Trust")
+                bluetoothctl trust "$MAC"
+                ;;
+            "Remove")
+                bluetoothctl remove "$MAC"
+                ;;
+        esac
         ;;
 esac

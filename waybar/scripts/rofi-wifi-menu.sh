@@ -5,121 +5,89 @@
 # Limits display to only available networks
 
 # Rofi configuration
-# Use the custom theme we created
 THEME="/home/lyon/.config/rofi/network-menu.rasi"
 
 # Get list of networks
-# Fields: SSID, SECURITY, BARS
-# We use awk to format it nicely
-# We use -rescan yes to get fresh list
+# IN-USE: * for connected
+# SSID: Network name
+# SECURITY: Security type
+# BARS: Signal strength
+# -t for terse (colon separated), -f for fields
 notify-send "Getting Wi-Fi networks..."
-LIST=$(nmcli --fields "SSID,SECURITY,BARS" device wifi list --rescan yes | sed 1d | sed 's/  */ /g' | sed -E "s/^ +//g" | sed -E "s/ +$//g" | uniq)
+LIST=$(nmcli -t -f IN-USE,SSID,SECURITY device wifi list --rescan yes)
 
-# Should we add a toggle option? No, user requested ONLY networks.
-# But we might want to filter out empty SSIDs
-LIST_CLEAN=$(echo "$LIST" | grep -v "^--")
+# Build formatted list and data arrays
+declare -a SSIDS
+declare -a SECURITIES
+declare -A SEEN
+
+OPTIONS=""
+INDEX=0
+
+# Use loop to process raw list
+while IFS=: read -r IN_USE SSID SECURITY; do
+    # Unescape colons in SSID if needed (nmcli escapes them as \:)
+    SSID=$(echo "$SSID" | sed 's/\\:/:/g')
+    
+    # Skip rows with empty SSID (hidden networks sometimes output empty)
+    if [[ -z "$SSID" ]]; then continue; fi
+    
+    # Deduplicate SSIDs (nmcli shows all APs)
+    if [[ -n "${SEEN[$SSID]}" ]]; then continue; fi
+    SEEN[$SSID]=1
+    
+    # Store data
+    SSIDS[$INDEX]="$SSID"
+    SECURITIES[$INDEX]="$SECURITY"
+    
+    # visual formatting
+    # Active indicator
+    ACTIVE_MARK=""
+    if [[ "$IN_USE" == "*" ]]; then
+        ACTIVE_MARK="<span color='#a6da95'><b>(Connected)</b></span>"
+    fi
+    
+    # Security/Lock visual
+    LOCK=""
+    if [[ "$SECURITY" != "" ]] && [[ "$SECURITY" != "--" ]]; then
+        LOCK=""
+    fi
+    
+    # Format: "SSID   Lock   Active"
+    # Using Pango markup
+    DISPLAY="<b>$SSID</b>   <span size='small' color='#6c6c8c'>$LOCK $SECURITY</span>   $ACTIVE_MARK"
+    
+    OPTIONS+="$DISPLAY\n"
+    ((INDEX++))
+    
+done <<< "$LIST"
 
 # Show rofi menu
-# We use -p "Wi-Fi" for prompt
-CHOSEN=$(echo "$LIST_CLEAN" | rofi -dmenu -i -selected-row 0 -p "Wi-Fi" -theme "$THEME")
+# -format i returns the selected index (0-based)
+# -markup-rows enables Pango markup
+CHOSEN_INDEX=$(echo -e "$OPTIONS" | rofi -dmenu -i -selected-row 0 -p "Wi-Fi" -theme "$THEME" -markup-rows -format i)
 
 # Exit if nothing selected
-if [ -z "$CHOSEN" ]; then
+if [ -z "$CHOSEN_INDEX" ]; then
     exit 0
 fi
 
-# Extract SSID (assuming SSID is the first field and might have spaces, but usually separated by security which has distinctive format or we can just assume SSID is everything before the last two columns if properly formatted, but nmcli output varies.
-# Let's try to grab SSID. The output from our sed command compacted spaces.
-# A safer way to get SSID is to use the chosen line to grep the full info or just assume SSID.
-# Simple approach: extracting SSID is tricky if it has spaces.
-# Let's use the line as is to find the network, or better, re-parse.
-# Actually, let's just use the CHOSEN line to extract SSID. 
-# "SSID SECURITY BARS"
-# Security usually "WPA2" "WPA1" "--" etc. Bars "▂▄▆█"
-# We can assume the last column is bars, second to last is security.
-# But security can be "WPA2 802.1X".
-# Let's use a standard trick: assume SSID is everything up to the known security columns or use nmcli with strictly separated columns.
-
-# Better approach for selection:
-# Use unique SSIDs.
-SSID=$(echo "$CHOSEN" | awk -F'  ' '{print $1}' | awk '{$1=$1;print}')
-# The above awk might fail if we compacted spaces.
-# Let's try to just select the SSID directly if we can.
-# Alternatively, simpler script logic:
-
-# Get SSID from the selected line
-# We can assume the BARS are at the end.
-# Let's just try to connect to the raw choice string? No.
-
-# Let's refine the list generation to make parsing easier.
-# Use tab separator for display but might look ugly.
-# Or just accept that we need to parse it back.
-
-# Let's try to simply extract the SSID.
-# SSID is usually the first part.
-# Let's rely on nmcli to handle the connection if we pass the SSID.
-# But we need the exact SSID.
-
-# Refined command to get proper columns, maybe wider spacing?
-# nmcli -f SSID,SECURITY,BARS device wifi list
-# We can maintain the spacing and use fixed width parsing? No, Rofi trims.
-
-# Workaround:
-# 1. Get list of SSIDs separately for logic, but we need to show info.
-# 2. Use a specific delimiter that is unlikely to be in SSID?
-# Let's use the fact that BARS (▂▄▆█) are distinctive.
-# We can use that as a marker? No.
-
-# Let's use `nmcli`'s built-in connect which is smart enough usually.
-# If we just pass the SSID.
-# Let's try to get the SSID by removing the last few words.
-# Bars is 1 word. Security is usually 1 word (WPA2).
-# So remove last 2 words?
-# Some networks have no security (--) and bars.
-# Some might have "WPA2 802.1X".
-
-# Let's simplify: Display SSID only?
-# User might want to see signal strength.
-
-# Let's try this:
-# Pass the full line to `nmcli device wifi connect`? No, it expects SSID.
-
-# Let's try to extract SSID by matching the line against the list again?
-# Or we can just use `nmcli` to connect assuming the user selected a known index? No, list changes.
-
-# Okay, simpler approach used by many scripts:
-# Get the SSID from the selection key.
-# Use `-format` in rofi?
-
-# Let's stick to a robust parsing:
-# Get SSID by removing the last columns.
-# Security column width is variable.
-# Bars is 4 chars usually? No, it's a string.
-
-# Let's just ask user for password if connection fails?
-# Or check if saved.
-
-# Function to get SSID
-read -r SSID <<< $(echo "$CHOSEN" | sed -r 's/\s+[^[:space:]]+\s+[^[:space:]]+$//')
-# This removes the last two whitespace-separated fields (Bars and Security).
-# Does it work?
-# "My Hostspot WPA2 ▂▄▆█" -> "My Hotspot"
-# "OpenWifi -- ▂▄▆█" -> "OpenWifi"
-# Seems reasonable.
-
-# Trim trailing whitespace
-SSID=$(echo "$SSID" | sed 's/ *$//')
+# Retrieve real data using index
+SSID="${SSIDS[$CHOSEN_INDEX]}"
+CHOSEN_SECURITY="${SECURITIES[$CHOSEN_INDEX]}"
 
 notify-send "Connecting to $SSID..."
 
 # Check if we have a saved connection for this SSID
+# Using exact string match for connection name is safer, but connection names are not always SSID.
+# nmcli connection show --active? 
+# Simplest: try up, if fail, connect.
 if nmcli connection show "$SSID" > /dev/null 2>&1; then
     nmcli connection up "$SSID"
 else
     # New connection
     # Check if security is needed
-    # We can check the CHOSEN string for security type
-    if [[ "$CHOSEN" =~ "WPA" ]] || [[ "$CHOSEN" =~ "WEP" ]]; then
+    if [[ "$CHOSEN_SECURITY" != "" ]] && [[ "$CHOSEN_SECURITY" != "--" ]]; then
         # Needs password
         PASSWORD=$(rofi -dmenu -p "Password for $SSID" -password -theme "$THEME")
         if [ -n "$PASSWORD" ]; then

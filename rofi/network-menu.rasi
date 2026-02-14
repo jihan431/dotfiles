@@ -2,18 +2,18 @@
 
 /* Overwrite font to match system preference if needed, otherwise inherit */
 * {
-    font: "JetBrainsMono Nerd Font Bold 12";
+    font: "SF Compact Display Medium 12";
 }
 
 window {
-    width:          450px;          /* Fixed width for consistency */
-    location:       center;         /* Center for better visibility */
-    anchor:         center;
-    x-offset:       0px;
+    width:          400px;          /* Fixed width for consistency */
+    location:       west;
+    anchor:         west;
+    x-offset:       3px;
     y-offset:       0px;
     
     background-color:   @background-utama;
-    border:             0px;
+    border:             1px;
     border-color:       @border-warna;
     border-radius:      16px;       /* Softer corners */
     padding:            20px;
@@ -35,7 +35,7 @@ prompt {
     background-color:   @background-aksen;
     text-color:         @teks-dipilih;
     border-radius:      10px 0px 0px 10px;
-    font:               "JetBrainsMono Nerd Font Bold 12";
+    font: "SF Compact Display Medium 12";
 }
 
 entry {
@@ -68,7 +68,7 @@ element {
     text-color:         @teks-utama;
     orientation:        horizontal; /* Force horizontal for list items */
     border-radius:      10px;
-    padding:            10px 15px;
+    padding:            10px 5px;
     spacing:            0px;        /* Reset spacing */
 }
 
@@ -79,10 +79,11 @@ element-icon {
     cursor:             inherit;
     margin:             0px 15px 0px 0px;
     vertical-align:     0.5;
-    horizontal-align:   0.5;
+    horizontal-align:   0.0;
 }
 
 element-text {
+    enabled:            true;
     background-color:   transparent;
     text-color:         inherit;
     vertical-align:     0.5;

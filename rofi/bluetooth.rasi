@@ -2,18 +2,18 @@
 
 /* Overwrite font to match system preference if needed, otherwise inherit */
 * {
-    font: "JetBrainsMono Nerd Font Bold 12";
+    font: "SF Compact Display Medium 12";
 }
 
 window {
-    width:          450px;          /* Fixed width for consistency */
-    location:       center;         /* Center for better visibility */
-    anchor:         center;
-    x-offset:       0px;
+    width:          400px;          /* Fixed width for consistency */
+    location:       west;         /* Center for better visibility */
+    anchor:         west;
+    x-offset:       3px;
     y-offset:       0px;
     
     background-color:   @background-utama;
-    border:             0px;
+    border:             1px;
     border-color:       @border-warna;
     border-radius:      16px;       /* Softer corners */
     padding:            20px;
@@ -32,14 +32,14 @@ inputbar {
 prompt {
     enabled:            true;
     padding:            12px 15px;
-    background-color:   @background-aksen;
+    background-color:   transparent;
     text-color:         @teks-dipilih;
     border-radius:      10px 0px 0px 10px;
-    font:               "JetBrainsMono Nerd Font Bold 12";
+    
 }
 
 entry {
-    background-color:   #252538;    /* Slightly lighter than bg */
+    background-color:   transparent;    /* Slightly lighter than bg */
     text-color:         @teks-utama;
     placeholder:        "Search Devices...";
     placeholder-color:  #6c6c8c;
@@ -51,13 +51,13 @@ entry {
 /* List of Devices */
 listview {
     background-color:   transparent;
-    columns:            1;
+    columns:            2;
     lines:              8;
     spacing:            6px;
     cycle:              true;
     dynamic:            true;
     layout:             vertical;
-    flow:               vertical;   /* Ensure vertical flow for list */
+    flow:               horizontal;   /* Ensure vertical flow for list */
     scrollbar:          false;
     margin:             5px 0px 0px 0px;
 }
@@ -68,7 +68,7 @@ element {
     text-color:         @teks-utama;
     orientation:        horizontal; /* Force horizontal for list items */
     border-radius:      10px;
-    padding:            10px 15px;
+    padding:            10px 5px;
     spacing:            0px;        /* Reset spacing */
 }
 
@@ -77,12 +77,13 @@ element-icon {
     text-color:         inherit;
     size:               24px;       /* Reset icon size */
     cursor:             inherit;
-    margin:             0px 15px 0px 0px;
+    margin:             0px 10px 0px 0px;
     vertical-align:     0.5;
-    horizontal-align:   0.5;
+    horizontal-align:   0.0;
 }
 
 element-text {
+    enabled:            true;
     background-color:   transparent;
     text-color:         inherit;
     vertical-align:     0.5;
@@ -102,5 +103,18 @@ element selected element-text {
 }
 
 element selected element-icon {
+    text-color:         @teks-dipilih;
+}
+
+element active {
+    background-color:   @background-aksen;
+    text-color:         @teks-dipilih;
+    border-radius:      10px;
+    border:             1px;
+    border-color:       @border-warna;
+}
+
+element active selected {
+    background-color:   @border-warna;
     text-color:         @teks-dipilih;
 }
