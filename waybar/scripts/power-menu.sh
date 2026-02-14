@@ -2,7 +2,7 @@
 
 options="\n\n\n"
 
-chosen="$(echo -e "$options" | rofi -dmenu drun -theme power.rasi -theme-str '#window { fullscreen: true; }'
+chosen="$(echo -e "$options" | rofi -dmenu -theme power.rasi -theme-str '#window { fullscreen: true; }'
 )",
 
 case $chosen in

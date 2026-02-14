@@ -40,7 +40,7 @@ window#waybar {
 }
 #connectivity {
   background-color: #9689d2;
-  margin: 0px 20px;
+  margin: 0px 18px;
   border-radius: 50px;
   transition: all 0.8s ease;
   padding-right: 0px;
@@ -97,7 +97,7 @@ window#waybar {
 
 #custom-battery-fill {
   min-height: 30px;
-  min-width: 20px;
+  min-width: 0px;
   border-radius: 5px; /* Slightly rounded corners */
   margin: 10px 30px; /* Center it horizontally */
   padding-right: 1px;
