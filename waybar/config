@@ -74,25 +74,6 @@
     "on-click": "/home/lyon/dotfiles/waybar/scripts/power-menu.sh",
     "tooltip": false
   },
-  "cpu": {
-    "interval": 10,
-    "format": "󰻠",
-    "tooltip": true,
-    "tooltip-format": "CPU: {usage}%"
-  },
-  "memory": {
-    "interval": 30,
-    "format": "󰍛",
-    "tooltip": true,
-    "tooltip-format": "RAM: {percentage}%"
-  },
-  "disk": {
-    "interval": 30,
-    "format": "󰋊",
-    "tooltip": true,
-    "tooltip-format": "Disk: {percentage_used}%",
-    "path": "/"
-  },
   "tray": {
     "icon-size": 20,
     "spacing": 8,

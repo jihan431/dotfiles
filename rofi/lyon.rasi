@@ -21,9 +21,9 @@ configuration {
     display-run:                "";
     display-filebrowser:        "";
     display-window:             "";
-    drun-display-format:        "{name}";
+    drun-display-format:        "";
     window-format:              "{w} · {c} · {t}";
-    
+    drun-exclude-categories: "Waydroid"; 
     hover-select:               true;
     me-select-entry:            "";
     me-accept-entry:            "MousePrimary";
@@ -78,8 +78,8 @@ entry {
 
 listview {
     background-color:   transparent;
-    columns:            4;
-    lines:              4;
+    columns:            5;
+    lines:              5;
     spacing:            0px;
     cycle:              false;
     dynamic:            false;
@@ -90,11 +90,15 @@ listview {
 
 element {
     orientation: vertical;
-    padding:     15px 10px;
-    spacing:     5px;
+    padding:     20px 20px;
+    spacing:     0px;
     border-radius: 12px;
     background-color: transparent;
     text-color: @teks-utama;
+}
+
+element-text {
+    enabled: false;
 }
 
 element-text, element-icon {
@@ -105,7 +109,7 @@ element-text, element-icon {
 }
 
 element-icon {
-    size:   48px;
+    size:   75px;
     margin: 0px 0px 5px 0px;
 }
 

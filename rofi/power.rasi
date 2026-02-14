@@ -1,12 +1,6 @@
-/**
- *
- * Rofi Power Menu Theme
- * Based on lyon.rasi
- *
- */
+
 
 * {
-    /* Theme settings */
     background-utama:    #1e1e2ed0;
     background-aksen:    #9689d219;
     teks-utama:          #d9e0ee;

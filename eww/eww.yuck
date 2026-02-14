@@ -17,3 +17,4 @@
        :class "clock-box"
     (label :text hour :class "time-hour")
     (label :text min  :class "time-min")))
+    
