@@ -1,5 +1,5 @@
 * {
-    background-utama:    #1e1e2eff;
+    background-utama:    #1e1e2ee2;
     background-aksen:    #9689d219;
     teks-utama:          #d9e0ee;
     teks-dipilih:        #ffffffff;
@@ -31,7 +31,7 @@ configuration {
 
 window {
     location:       center;
-    width:          500px;
+    width:          700px;
     border-radius:  16px;    
     background-color:   @background-utama;
     border:             0px;
