@@ -1,174 +1,163 @@
-{
-  "layer": "top",
-  "position": "left",
-  "exclusive": true,
-  "mod": "dock",
-  "passthrough": false,
-  "gtk-layer-shell": false,
-  "width": 70,
-  "margin-top": 3,
-  "margin-bottom": 3,
-  "margin-left": 3,
-  "fixed-center": true,
-  "spacing": 0,
-  "modules-left": [
-    "custom/launcher",
-    "clock",
-    "hyprland/workspaces",
-    "group/connectivity"
-  ],
-  "modules-center": [],
-  "modules-right": [
-    "tray",
-    "wlr/taskbar",
-    "custom/battery-fill",
-    "custom/power"
-  ],
-  "group/connectivity": {
-    "orientation": "vertical",
-    "drawer": {
-      "transition-duration": 500,
-      "children-class": "connectivity-child",
-      "transition-left-to-right": true,
-      "click-to-reveal": true
-    },
-    "modules": [
-      "custom/connectivity-toggle",
-      "backlight",
-      "network",
-      "bluetooth",
-      "pulseaudio",
-      "pulseaudio#microphone"
-    ]
-  },
-  "custom/connectivity-toggle": {
-    "format": "󰍲",
-    "tooltip": false
-  },
-  "clock": {
-    "format": "{:%H\n%M}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
-  },
-  "hyprland/workspaces": {
-    "disable-scroll": true,
-    "all-outputs": true,
-    "on-click": "activate",
-    "format": "{icon}",
-    "format-icons": {
-      "1": "",
-      "2": "󰨞",
-      "3": "",
-      "4": "",
-      "default": ""
-    },
-    "persistent-workspaces": {
-      "1": [],
-      "2": [],
-      "3": [],
-      "4": []
+[
+  {
+    "position": "left",
+    "exclusive": true,
+    "mod": "dock",
+    "height": 0,
+    "modules-center": [
+      "custom/battery-fill"
+    ],
+    "custom/battery-fill": {
+      "exec": "/home/lyon/.config/waybar/scripts/battery-fill.sh",
+      "return-type": "json",
+      "interval": 5,
+      "tooltip": true
     }
   },
-  "custom/launcher": {
-    "format": "",
-    "on-click": "rofi -show drun -theme ~/.config/rofi/lyon.rasi",
-    "tooltip": false
-  },
-  "custom/power": {
-    "format": "󰍃",
-    "on-click": "/home/lyon/dotfiles/waybar/scripts/power-menu.sh",
-    "tooltip": false
-  },
-  "tray": {
-    "icon-size": 20,
-    "spacing": 8,
-    "ignore-list": [
-      "blueman-applet"
-    ]
-  },
-  "backlight": {
-    "device": "intel_backlight",
-    "tooltip": false,
-    "format": "{icon}",
-    "format-icons": [
-      "󰃞",
-      "󰃟",
-      "󰃠"
+  {
+    "position": "left",
+    "exclusive": true,
+    "mod": "dock",
+    "passthrough": false,
+    "gtk-layer-shell": false,
+    "width": 70,
+    "fixed-center": true,
+    "spacing": 0,
+    "modules-left": [
+      "custom/launcher",
+      "clock",
+      "hyprland/workspaces",
+      "tray",
+      "group/connectivity"
     ],
-    "on-scroll-up": "/home/lyon/.config/waybar/scripts/brightness-control.sh d",
-    "on-scroll-down": "/home/lyon/.config/waybar/scripts/brightness-control.sh i"
-  },
-  "custom/battery-fill": {
-    "exec": "/home/lyon/.config/waybar/scripts/battery-fill.sh",
-    "return-type": "json",
-    "interval": 5,
-    "tooltip": true
-  },
-  "pulseaudio": {
-    "format": "{icon}",
-    "tooltip": true,
-    "tooltip-format": "{volume}%",
-    "format-muted": "󰖁",
-    "on-click": "/home/lyon/.config/waybar/scripts/volume-control.sh m",
-    "on-scroll-up": "/home/lyon/.config/waybar/scripts/volume-control.sh i",
-    "on-scroll-down": "/home/lyon/.config/waybar/scripts/volume-control.sh d",
-    "scroll-step": 5,
-    "reverse-scrolling": 1,
-    "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": [
-        "󰕿",
-        "󰖀",
-        "󰕾"
+    "modules-center": [],
+    "modules-right": [
+      "custom/power"
+    ],
+    "group/connectivity": {
+      "orientation": "vertical",
+      "drawer": {
+        "transition-duration": 500,
+        "children-class": "connectivity-child",
+        "transition-left-to-right": true,
+        "click-to-reveal": true
+      },
+      "modules": [
+        "custom/connectivity-toggle",
+        "backlight",
+        "network",
+        "bluetooth",
+        "pulseaudio",
+        "pulseaudio#microphone"
       ]
-    }
-  },
-  "pulseaudio#microphone": {
-    "format": "{format_source}",
-    "tooltip": false,
-    "format-source": "󰍬",
-    "format-source-muted": "󰍭",
-    "on-click": "pamixer --default-source -t",
-    "on-scroll-up": "pamixer --default-source -i 5",
-    "on-scroll-down": "pamixer --default-source -d 5",
-    "scroll-step": 5
-  },
-  "network": {
-    "format-wifi": "󰤨",
-    "format-ethernet": "",
-    "tooltip-format": "{essid} - {ifname} via {gwaddr}",
-    "format-linked": "",
-    "format-disconnected": "",
-    "format-alt": "󰤨",
-    "on-click": "/home/lyon/.config/waybar/scripts/launch-network.sh"
-  },
-  "bluetooth": {
-    "format": "󰂯",
-    "format-disabled": "",
-    "format-connected": "",
-    "tooltip-format": "{controller_alias}\t{controller_address}",
-    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-    "on-click": "/home/lyon/.config/waybar/scripts/rofi-bluetooth.sh"
-  },
-  "wlr/taskbar": {
-    "format": "{icon}",
-    "icon-size": 45,
-    "tooltip-format": "{title}",
-    "notifications": true,
-    "on-click": "activate",
-    "on-click-right": "close",
-    "show_all_outputs": true,
-    "ignore-list": [
-      "kitty",
-      "nwg-look"
-    ],
-    "app_ids-mapping": {
-      "firefox-developer-edition": "firefox-developer-edition"
+    },
+    "custom/connectivity-toggle": {
+      "format": "󰍲",
+      "tooltip": false
+    },
+    "clock": {
+      "format": "{:%H\n%M}",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "hyprland/workspaces": {
+      "disable-scroll": true,
+      "all-outputs": true,
+      "on-click": "activate",
+      "format": "{icon}",
+      "format-icons": {
+        "1": "",
+        "2": "󰨞",
+        "3": "",
+        "4": "",
+        "default": ""
+      },
+      "persistent-workspaces": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": []
+      }
+    },
+    "custom/launcher": {
+      "format": "",
+      "on-click": "rofi -show drun -theme ~/.config/rofi/lyon.rasi",
+      "tooltip": false
+    },
+    "custom/power": {
+      "format": "󰍃",
+      "on-click": "/home/lyon/dotfiles/waybar/scripts/power-menu.sh",
+      "tooltip": false
+    },
+    "tray": {
+      "icon-size": 20,
+      "spacing": 8,
+      "ignore-list": [
+        "blueman-applet"
+      ]
+    },
+    "backlight": {
+      "device": "intel_backlight",
+      "tooltip": false,
+      "format": "{icon}",
+      "format-icons": [
+        "󰃞",
+        "󰃟",
+        "󰃠"
+      ],
+      "on-scroll-up": "/home/lyon/.config/waybar/scripts/brightness-control.sh d",
+      "on-scroll-down": "/home/lyon/.config/waybar/scripts/brightness-control.sh i"
+    },
+    "pulseaudio": {
+      "format": "{icon}",
+      "tooltip": true,
+      "tooltip-format": "{volume}%",
+      "format-muted": "󰖁",
+      "on-click": "/home/lyon/.config/waybar/scripts/volume-control.sh m",
+      "on-scroll-up": "/home/lyon/.config/waybar/scripts/volume-control.sh i",
+      "on-scroll-down": "/home/lyon/.config/waybar/scripts/volume-control.sh d",
+      "scroll-step": 5,
+      "reverse-scrolling": 1,
+      "format-icons": {
+        "headphone": "",
+        "hands-free": "",
+        "headset": "",
+        "phone": "",
+        "portable": "",
+        "car": "",
+        "default": [
+          "󰕿",
+          "󰖀",
+          "󰕾"
+        ]
+      }
+    },
+    "pulseaudio#microphone": {
+      "format": "{format_source}",
+      "tooltip": false,
+      "format-source": "󰍬",
+      "format-source-muted": "󰍭",
+      "on-click": "pamixer --default-source -t",
+      "on-scroll-up": "pamixer --default-source -i 5",
+      "on-scroll-down": "pamixer --default-source -d 5",
+      "scroll-step": 5
+    },
+    "network": {
+      "format-wifi": "󰤨",
+      "format-ethernet": "",
+      "tooltip-format": "{essid} - {ifname} via {gwaddr}",
+      "format-linked": "",
+      "format-disconnected": "",
+      "format-alt": "󰤨",
+      "on-click": "/home/lyon/.config/waybar/scripts/launch-network.sh"
+    },
+    "bluetooth": {
+      "format": "󰂯",
+      "format-disabled": "",
+      "format-connected": "",
+      "tooltip-format": "{controller_alias}\t{controller_address}",
+      "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+      "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+      "on-click": "/home/lyon/.config/waybar/scripts/rofi-bluetooth.sh"
     }
   }
-}
+]

@@ -1,7 +1,3 @@
-/* ╔══════════════════════════════════════════════════════════════╗
-   ║  WAYBAR PREMIUM THEME - Purple Dock Edition                  ║
-   ╚══════════════════════════════════════════════════════════════╝ */
-
 * {
   border: none;
   font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
@@ -15,7 +11,9 @@
 window#waybar {
   background: rgba(25, 30, 45, 1);
   color: #9689d2;
-  border-radius: 8px;
+  border-radius: 0px;
+  padding: 0;
+  margin: 0;
 }
 
 .modules-left,
@@ -28,26 +26,25 @@ window#waybar {
   box-shadow: none;
 }
 
-.modules-left {
-  margin-top: 8px;
-}
-
 .modules-right {
-  margin-bottom: 8px;
+  margin-bottom: 0px;
 }
 #backlight {
   padding-right: 6px;
 }
 #connectivity {
   background-color: #9689d2;
-  margin: 0px 18px;
-  border-radius: 50px;
+  margin: 0px 0px;
   transition: all 0.8s ease;
   padding-right: 0px;
+  border-radius: 10px;
   margin-top: 15px;
+  min-width: 0px;
+  margin: 13px;
 }
 
 #custom-connectivity-toggle {
+  min-height: 0px;
   padding-top: 5px;
   padding-bottom: 5px;
   margin: 2px 0;
@@ -95,16 +92,6 @@ window#waybar {
   font-size: 17px;
 }
 
-#custom-battery-fill {
-  min-height: 30px;
-  min-width: 0px;
-  border-radius: 5px; /* Slightly rounded corners */
-  margin: 10px 30px; /* Center it horizontally */
-  padding-right: 1px;
-  color: #1e1e2e; /* Hide text */
-  background: #c8c8ff;
-}
-
 /* --- Charging animation --- */
 @keyframes charging-pulse {
   0% {
@@ -116,215 +103,6 @@ window#waybar {
   100% {
     opacity: 0.6;
   }
-}
-
-/* --- Discharging fill levels (purple: bottom-to-top) --- */
-#custom-battery-fill.level-0 {
-  background: #c8c8ff;
-}
-#custom-battery-fill.level-5 {
-  background: linear-gradient(to top, #de1818 5%, #c8c8ff 5%);
-}
-#custom-battery-fill.level-10 {
-  background: linear-gradient(to top, #de1818 10%, #c8c8ff 10%);
-}
-#custom-battery-fill.level-15 {
-  background: linear-gradient(to top, #de1818 15%, #c8c8ff 15%);
-}
-#custom-battery-fill.level-20 {
-  background: linear-gradient(to top, #de1818 20%, #c8c8ff 20%);
-}
-#custom-battery-fill.level-25 {
-  background: linear-gradient(to top, #ffae00 25%, #c8c8ff 25%);
-}
-#custom-battery-fill.level-30 {
-  background: linear-gradient(to top, #ffae00 30%, #c8c8ff 30%);
-}
-#custom-battery-fill.level-35 {
-  background: linear-gradient(to top, #ffae00 35%, #c8c8ff 35%);
-}
-#custom-battery-fill.level-40 {
-  background: linear-gradient(to top, #ffae00 40%, #c8c8ff 40%);
-}
-#custom-battery-fill.level-45 {
-  background: linear-gradient(to top, #9689d2 45%, #c8c8ff 45%);
-}
-#custom-battery-fill.level-50 {
-  background: linear-gradient(to top, #9689d2 50%, #c8c8ff 50%);
-}
-#custom-battery-fill.level-55 {
-  background: linear-gradient(to top, #9689d2 55%, #c8c8ff 55%);
-}
-#custom-battery-fill.level-60 {
-  background: linear-gradient(to top, #9689d2 60%, #c8c8ff 60%);
-}
-#custom-battery-fill.level-65 {
-  background: linear-gradient(to top, #9689d2 65%, #c8c8ff 65%);
-}
-#custom-battery-fill.level-70 {
-  background: linear-gradient(to top, #9689d2 70%, #c8c8ff 70%);
-}
-#custom-battery-fill.level-75 {
-  background: linear-gradient(to top, #9689d2 75%, #c8c8ff 75%);
-}
-#custom-battery-fill.level-80 {
-  background: linear-gradient(to top, #9689d2 80%, #c8c8ff 80%);
-}
-#custom-battery-fill.level-85 {
-  background: linear-gradient(to top, #9689d2 85%, #c8c8ff 85%);
-}
-#custom-battery-fill.level-90 {
-  background: linear-gradient(to top, #9689d2 90%, #c8c8ff 90%);
-}
-#custom-battery-fill.level-95 {
-  background: linear-gradient(to top, #9689d2 95%, #c8c8ff 95%);
-}
-
-#custom-battery-fill.level-100 {
-  background: #9689d2;
-}
-
-/* --- Discharging Icon Visibility (White) --- */
-#custom-battery-fill.level-0,
-#custom-battery-fill.level-5,
-#custom-battery-fill.level-10,
-#custom-battery-fill.level-15,
-#custom-battery-fill.level-20,
-#custom-battery-fill.level-25,
-#custom-battery-fill.level-30,
-#custom-battery-fill.level-35,
-#custom-battery-fill.level-40,
-#custom-battery-fill.level-45,
-#custom-battery-fill.level-50,
-#custom-battery-fill.level-55,
-#custom-battery-fill.level-60,
-#custom-battery-fill.level-65,
-#custom-battery-fill.level-70,
-#custom-battery-fill.level-75,
-#custom-battery-fill.level-80,
-#custom-battery-fill.level-85,
-#custom-battery-fill.level-90,
-#custom-battery-fill.level-95,
-#custom-battery-fill.level-100 {
-  font-size: 25px;
-  padding-left: 2px;
-  color: #000000;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  padding-bottom: 2px;
-}
-
-/* --- Charging fill levels (green: bottom-to-top + pulse animation) --- */
-#custom-battery-fill.level-0-charging,
-#custom-battery-fill.level-5-charging,
-#custom-battery-fill.level-10-charging,
-#custom-battery-fill.level-15-charging,
-#custom-battery-fill.level-20-charging,
-#custom-battery-fill.level-25-charging,
-#custom-battery-fill.level-30-charging,
-#custom-battery-fill.level-35-charging,
-#custom-battery-fill.level-40-charging,
-#custom-battery-fill.level-45-charging,
-#custom-battery-fill.level-50-charging,
-#custom-battery-fill.level-55-charging,
-#custom-battery-fill.level-60-charging,
-#custom-battery-fill.level-65-charging,
-#custom-battery-fill.level-70-charging,
-#custom-battery-fill.level-75-charging,
-#custom-battery-fill.level-80-charging,
-#custom-battery-fill.level-85-charging,
-#custom-battery-fill.level-90-charging,
-#custom-battery-fill.level-95-charging,
-#custom-battery-fill.level-100-charging {
-  font-size: 25px;
-  padding-left: 2px;
-  color: #000000;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  padding-bottom: 2px; /* Slight adjustment for vertical centering */
-}
-
-#custom-battery-fill.level-0-charging {
-  background: #c8c8ff;
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-5-charging {
-  background: linear-gradient(to top, #33e024 5%, #c8c8ff 5%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-10-charging {
-  background: linear-gradient(to top, #33e024 10%, #c8c8ff 10%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-15-charging {
-  background: linear-gradient(to top, #33e024 15%, #c8c8ff 15%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-20-charging {
-  background: linear-gradient(to top, #33e024 20%, #c8c8ff 20%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-25-charging {
-  background: linear-gradient(to top, #33e024 25%, #c8c8ff 25%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-30-charging {
-  background: linear-gradient(to top, #33e024 30%, #c8c8ff 30%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-35-charging {
-  background: linear-gradient(to top, #33e024 35%, #c8c8ff 35%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-40-charging {
-  background: linear-gradient(to top, #33e024 40%, #c8c8ff 40%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-45-charging {
-  background: linear-gradient(to top, #33e024 45%, #c8c8ff 45%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-50-charging {
-  background: linear-gradient(to top, #33e024 50%, #c8c8ff 50%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-55-charging {
-  background: linear-gradient(to top, #33e024 55%, #c8c8ff 55%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-60-charging {
-  background: linear-gradient(to top, #33e024 60%, #c8c8ff 60%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-65-charging {
-  background: linear-gradient(to top, #33e024 65%, #c8c8ff 65%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-70-charging {
-  background: linear-gradient(to top, #33e024 70%, #c8c8ff 70%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-75-charging {
-  background: linear-gradient(to top, #33e024 75%, #c8c8ff 75%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-80-charging {
-  background: linear-gradient(to top, #33e024 80%, #c8c8ff 80%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-85-charging {
-  background: linear-gradient(to top, #33e024 85%, #c8c8ff 85%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-90-charging {
-  background: linear-gradient(to top, #33e024 90%, #c8c8ff 90%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-95-charging {
-  background: linear-gradient(to top, #33e024 95%, #c8c8ff 95%);
-  animation: charging-pulse 2s ease-in-out infinite;
-}
-#custom-battery-fill.level-100-charging {
-  background: #33e024;
-  animation: charging-pulse 2s ease-in-out infinite;
 }
 
 #clock {
@@ -441,25 +219,212 @@ tooltip label {
   background: transparent;
 }
 
-#taskbar button {
-  padding: 4 0 10 0px;
+/* --- Discharging fill levels (purple: bottom-to-top) --- */
+#custom-battery-fill.level-0 {
+  background: #c8c8ff;
+}
+#custom-battery-fill.level-5 {
+  background: linear-gradient(to top, #de1818 5%, #c8c8ff 5%);
+}
+#custom-battery-fill.level-10 {
+  background: linear-gradient(to top, #de1818 10%, #c8c8ff 10%);
+}
+#custom-battery-fill.level-15 {
+  background: linear-gradient(to top, #de1818 15%, #c8c8ff 15%);
+}
+#custom-battery-fill.level-20 {
+  background: linear-gradient(to top, #de1818 20%, #c8c8ff 20%);
+}
+#custom-battery-fill.level-25 {
+  background: linear-gradient(to top, #ffae00 25%, #c8c8ff 25%);
+}
+#custom-battery-fill.level-30 {
+  background: linear-gradient(to top, #ffae00 30%, #c8c8ff 30%);
+}
+#custom-battery-fill.level-35 {
+  background: linear-gradient(to top, #ffae00 35%, #c8c8ff 35%);
+}
+#custom-battery-fill.level-40 {
+  background: linear-gradient(to top, #ffae00 40%, #c8c8ff 40%);
+}
+#custom-battery-fill.level-45 {
+  background: linear-gradient(to top, #9689d2 45%, #c8c8ff 45%);
+}
+#custom-battery-fill.level-50 {
+  background: linear-gradient(to top, #9689d2 50%, #c8c8ff 50%);
+}
+#custom-battery-fill.level-55 {
+  background: linear-gradient(to top, #9689d2 55%, #c8c8ff 55%);
+}
+#custom-battery-fill.level-60 {
+  background: linear-gradient(to top, #9689d2 60%, #c8c8ff 60%);
+}
+#custom-battery-fill.level-65 {
+  background: linear-gradient(to top, #9689d2 65%, #c8c8ff 65%);
+}
+#custom-battery-fill.level-70 {
+  background: linear-gradient(to top, #9689d2 70%, #c8c8ff 70%);
+}
+#custom-battery-fill.level-75 {
+  background: linear-gradient(to top, #9689d2 75%, #c8c8ff 75%);
+}
+#custom-battery-fill.level-80 {
+  background: linear-gradient(to top, #9689d2 80%, #c8c8ff 80%);
+}
+#custom-battery-fill.level-85 {
+  background: linear-gradient(to top, #9689d2 85%, #c8c8ff 85%);
+}
+#custom-battery-fill.level-90 {
+  background: linear-gradient(to top, #9689d2 90%, #c8c8ff 90%);
+}
+#custom-battery-fill.level-95 {
+  background: linear-gradient(to top, #9689d2 95%, #c8c8ff 95%);
 }
 
-#taskbar button:hover {
-  background: transparent;
-  box-shadow: none;
-  text-shadow: none;
-  color: #9689d2;
-  border-color: transparent;
+#custom-battery-fill.level-100 {
+  background: #9689d2;
 }
 
-#taskbar button.active {
-  font-weight: 700;
-  border-radius: 0;
-  color: #9689d2;
+#custom-battery-fill.level-0,
+#custom-battery-fill.level-5,
+#custom-battery-fill.level-10,
+#custom-battery-fill.level-15,
+#custom-battery-fill.level-20,
+#custom-battery-fill.level-25,
+#custom-battery-fill.level-30,
+#custom-battery-fill.level-35,
+#custom-battery-fill.level-40,
+#custom-battery-fill.level-45,
+#custom-battery-fill.level-50,
+#custom-battery-fill.level-55,
+#custom-battery-fill.level-60,
+#custom-battery-fill.level-65,
+#custom-battery-fill.level-70,
+#custom-battery-fill.level-75,
+#custom-battery-fill.level-80,
+#custom-battery-fill.level-85,
+#custom-battery-fill.level-90,
+#custom-battery-fill.level-95,
+#custom-battery-fill.level-100 {
+  font-size: 20px;
+  color: #000000;
+  min-height: 900px;
 }
 
-#taskbar button.urgent {
+#custom-battery-fill.level-0-charging,
+#custom-battery-fill.level-5-charging,
+#custom-battery-fill.level-10-charging,
+#custom-battery-fill.level-15-charging,
+#custom-battery-fill.level-20-charging,
+#custom-battery-fill.level-25-charging,
+#custom-battery-fill.level-30-charging,
+#custom-battery-fill.level-35-charging,
+#custom-battery-fill.level-40-charging,
+#custom-battery-fill.level-45-charging,
+#custom-battery-fill.level-50-charging,
+#custom-battery-fill.level-55-charging,
+#custom-battery-fill.level-60-charging,
+#custom-battery-fill.level-65-charging,
+#custom-battery-fill.level-70-charging,
+#custom-battery-fill.level-75-charging,
+#custom-battery-fill.level-80-charging,
+#custom-battery-fill.level-85-charging,
+#custom-battery-fill.level-90-charging,
+#custom-battery-fill.level-95-charging,
+#custom-battery-fill.level-100-charging {
+  font-size: 20px;
+  color: #000000;
+  min-height: 885px;
+  border-radius: 8 8 8 8px;
+  margin-left: 5px;
+}
+
+#custom-battery-fill.level-0-charging {
+  background: #c8c8ff;
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-5-charging {
+  background: linear-gradient(to top, #33e024 5%, #c8c8ff 5%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-10-charging {
+  background: linear-gradient(to top, #33e024 10%, #c8c8ff 10%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-15-charging {
+  background: linear-gradient(to top, #33e024 15%, #c8c8ff 15%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-20-charging {
+  background: linear-gradient(to top, #33e024 20%, #c8c8ff 20%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-25-charging {
+  background: linear-gradient(to top, #33e024 25%, #c8c8ff 25%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-30-charging {
+  background: linear-gradient(to top, #33e024 30%, #c8c8ff 30%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-35-charging {
+  background: linear-gradient(to top, #33e024 35%, #c8c8ff 35%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-40-charging {
+  background: linear-gradient(to top, #33e024 40%, #c8c8ff 40%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-45-charging {
+  background: linear-gradient(to top, #33e024 45%, #c8c8ff 45%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-50-charging {
+  background: linear-gradient(to top, #33e024 50%, #c8c8ff 50%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-55-charging {
+  background: linear-gradient(to top, #33e024 55%, #c8c8ff 55%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-60-charging {
+  background: linear-gradient(to top, #33e024 60%, #c8c8ff 60%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-65-charging {
+  background: linear-gradient(to top, #33e024 65%, #c8c8ff 65%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-70-charging {
+  background: linear-gradient(to top, #33e024 70%, #c8c8ff 70%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-75-charging {
+  background: linear-gradient(to top, #33e024 75%, #c8c8ff 75%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-80-charging {
+  background: linear-gradient(to top, #33e024 80%, #c8c8ff 80%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-85-charging {
+  background: linear-gradient(to top, #33e024 85%, #c8c8ff 85%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-90-charging {
+  background: linear-gradient(to top, #33e024 90%, #c8c8ff 90%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-95-charging {
+  background: linear-gradient(to top, #33e024 95%, #c8c8ff 95%);
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+#custom-battery-fill.level-100-charging {
+  background: #33e024;
+  animation: charging-pulse 2s ease-in-out infinite;
+}
+
+#custom-battery-fill {
   color: #1e1e2e;
-  background: #f38ba8;
+  background: #c8c8ff;
 }
